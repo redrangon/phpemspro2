@@ -1,0 +1,101 @@
+{x2;if:!$_userhash}
+{x2;include:header}
+<body>
+{x2;include:nav}
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="pep">
+			<div class="col-xs-2 leftmenu">
+				{x2;include:menu}
+			</div>
+			<div id="datacontent">
+				{x2;endif}
+				<ol class="breadcrumb">
+					<li><a href="index.php?{x2;$_route['app']}-agent">代理平台</a></li>
+					<li class="active">充值记录</li>
+				</ol>
+				<div class="panel panel-default" id="datacontent-container">
+					<div class="panel-heading">充值记录</div>
+					<div class="panel-body">
+						<form action="index.php?finance-agent-records" method="post" class="form-inline">
+							<table class="table">
+								<thead>
+								<tr>
+									<td>
+										下单时间：
+									</td>
+									<td>
+										<input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" type="text" name="search[stime]" size="8" id="stime" value="{x2;$search['stime']}"/> - <input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" size="8" type="text" name="search[etime]" id="etime" value="{x2;$search['etime']}"/>
+									</td>
+									<td>
+										订单状态：
+									</td>
+									<td>
+										<select name="search[orderstatus]" class="form-control">
+											<option value="0">不限</option>
+											<option value="1"{x2;if:$search['orderstatus'] == 1} selected{x2;endif}>待付款</option>
+											<option value="2"{x2;if:$search['orderstatus'] == 2} selected{x2;endif}>已完成</option>
+											<option value="99"{x2;if:$search['orderstatus'] == 99} selected{x2;endif}>已取消</option>
+										</select>
+									</td>
+									<td>
+										<button class="btn btn-primary" type="submit">提交</button>
+									</td>
+								</tr>
+								</thead>
+							</table>
+							<div class="input">
+								<input type="hidden" value="1" name="search[argsmodel]" />
+							</div>
+						</form>
+						<blockquote style="background-color:#f3f3f3;font-size:14px;border-left:5px solid #02756e;">
+							共计订单 {x2;$orders['number']} 个；总计费用：{x2;$money} 元。
+						</blockquote>
+						<table class="table table-hover table-bordered">
+							<thead>
+							<tr class="info">
+								<th>订单号</th>
+								<th>订单商品</th>
+								<th>订单客户</th>
+								<th>金额</th>
+								<th>下单时间</th>
+								<th>订单状态</th>
+                             	<th>即时余额</th>
+								<th>操作</th>
+							</tr>
+							</thead>
+							<tbody>
+                            {x2;tree:$orders['data'],order,oid}
+							<tr>
+								<td>{x2;v:order['ordersn']}</td>
+								<td>{x2;v:order['ordername']}</td>
+								<td>{x2;v:order['orderusername']}</td>
+								<td>{x2;v:order['orderprice']}</td>
+								<td>{x2;v:order['ordertime']}</td>
+								<td>{x2;$orderstatus[v:order['orderstatus']]}</td>
+                              	<td>{x2;v:order['ordercoin']}</td>
+								<td>
+									<ul class="list-inline list-unstyled">
+										<li><a class="confirm" href="index.php?finance-agent-orders-del&ordersn={x2;v:order['ordersn']}&page={x2;$page}{x2;$u}" title="删除订单">删除</a></li>
+									</ul>
+								</td>
+							</tr>
+                            {x2;endtree}
+							</tbody>
+						</table>
+						{x2;if:$orders['pages']}
+						<ul class="pagination pull-right">
+                            {x2;$orders['pages']}
+						</ul>
+						{x2;endif}
+					</div>
+				</div>
+				{x2;include:footer}
+                {x2;if:!$_userhash}
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
+{x2;endif}

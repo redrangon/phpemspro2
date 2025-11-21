@@ -1,0 +1,35 @@
+{x2;include:plugin_question}
+<div class="clear question">
+	<table class="table table-hover table-bordered">
+		<tr>
+			<th>
+				提问问题
+			</th>
+		</tr>
+		<tr>
+			<td>
+				{x2;$faq['faqask']}
+			</td>
+		</tr>
+		<tr>
+			<th>
+				回答人
+			</th>
+		</tr>
+		<tr>
+			<td>
+				{x2;$faq['faqteacher']}
+			</td>
+		</tr>
+		<tr>
+			<th>
+				回答内容
+			</th>
+		</tr>
+		<tr>
+			<td>
+				{x2;$faq['faqanswer']}
+			</td>
+		</tr>
+	</table>
+</div>

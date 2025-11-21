@@ -1,0 +1,714 @@
+@bgcolor:#F1F5F8;
+@color:#555555;
+@activecolor:#02756E;
+@headerbgcolor:#0f74a8;
+@headerfontcolor:#FFFFFF;
+@headerfontlinkcolor:#FFFFFF;
+@bodyfontcolor:#FFFFFF;
+@footerbgcolor:#0f74a8;
+@footerfontcolor:#FFFFFF;
+@footerfontlinkcolor:#FFFFFF;
+@panelbgcolor:#FFFFFF;
+@iconcolor:#777777;
+@bordercolor:#F0F0F0;
+@darkbordercolor:silver;
+@wrongcolor:#FF7B77;
+@rightcolor:#18B8A0;
+@font-face{
+    font-family: 'Mistral';
+    src: url("../fonts/mistral.ttf");
+}
+/**bootstrap 重定义**/
+.glyphicon{
+    font-size: 0.36rem;
+}
+.badge{
+    font-size: 0.24rem;
+    padding: 0.1rem 0.15rem;
+}
+.col-xs-1,.col-xs-2,.col-xs-3,.col-xs-4,.col-xs-5,.col-xs-6,.col-xs-7,.col-xs-8,.col-xs-9,.col-xs-10,.col-xs-11,.col-xs-12{
+    padding:0.15rem;
+}
+.btn-primary,.btn-primary:active,.btn-primary:hover{
+    background-color:@activecolor;
+    border-color:@activecolor;
+}
+.btn:active{
+    box-shadow: none;
+}
+.btn-primary:active:hover{
+    background-color:#E76D00;
+}
+/**pep原生**/
+html{
+    font-size:100px;
+}
+html,body{
+    color:@color;
+    background:none;
+    overflow: hidden;
+}
+*{
+    box-sizing: border-box;
+    font-size: 0.28rem;
+}
+body{
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+    background-color: @bgcolor;
+}
+a{
+    overflow: hidden;
+    color: @color;
+    &:hover{
+        color: @color;
+        text-decoration: none;
+    }
+    &:active{
+        color: @color;
+        text-decoration: none;
+    }
+}
+img{
+    max-width: 100%;
+    height: max-content;
+}
+.mask{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top:0px;
+    z-index:99997;
+    .maskbox{
+        height: 100%;
+        width: 100%;
+        background-color: #0f0f0f;
+        opacity: 0.6;
+        z-index:99998;
+    }
+    .tips{
+        position: absolute;
+        background-color: #0f0f0f;
+        color:#FFFFFF;
+        border-radius: 0.1rem;
+        bottom:1.6rem;
+        left:50%;
+        padding:0.2rem 0.4rem;
+        font-size: 0.28rem;
+        text-align: center;
+        z-index:99999;
+    }
+    .dangerTips{
+        background-color: @bodyfontcolor;
+        border-radius: 0.1rem;
+        font-size: 0.32rem;
+        position: absolute;
+        width: 72%;
+        top:35%;
+        left:14%;
+        z-index:99999;
+        text-align: center;
+        .tipbox{
+            padding:0.4rem;
+            line-height: 0.56rem;
+            border-bottom: 1px solid @bordercolor;
+        }
+        .tiptitle{
+            color: @color;
+            line-height: 0.96rem;
+            &:active{
+                background-color: gainsboro;
+                border-bottom-left-radius:0.1rem;
+                border-bottom-right-radius:0.1rem;
+            }
+        }
+    }
+    .confirmTips{
+        background-color: @bodyfontcolor;
+        border-radius: 0.1rem;
+        font-size: 0.32rem;
+        position: absolute;
+        width: 72%;
+        top:35%;
+        left:14%;
+        z-index:99999;
+        text-align: center;
+        .tipbox{
+            padding:0.4rem;
+            line-height: 0.56rem;
+            border-bottom: 1px solid @bordercolor;
+        }
+        .tiptitle{
+            color: @color;
+            line-height: 0.72rem;
+            div{
+                &:active{
+                    background-color: gainsboro;
+                }
+                &.confirm{
+                    border-right: 1px solid @bordercolor;
+                    border-bottom-left-radius:0.1rem;
+                }
+                &.cancel{
+                    border-bottom-right-radius:0.1rem;
+                }
+            }
+        }
+    }
+}
+.pages{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top:0px;
+    left:0px;
+    background-color: @bgcolor;
+    &:last-child{
+        z-index: 999;
+    }
+}
+.pages-header{
+    position: fixed;
+    background-color: @activecolor;
+    padding-top:0.12rem;
+    font-size: 0.32rem;
+    width:100%;
+    top: 0px;
+    color:@bodyfontcolor;
+    z-index:9;
+    height: 0.96rem;
+    line-height: 0.48rem;
+    border-bottom:0px gainsboro solid;
+    a{
+        color: @bodyfontcolor;
+        font-weight: bold;
+    }
+    .glyphicon{
+        color: @bodyfontcolor;
+    }
+}
+.pages > .pages-tabs{
+    display: none;
+    cursor: pointer;
+    &:first-child{
+        display: block;
+    }
+}
+.pages-content{
+    & {
+        position: absolute;
+        width: 100%;
+        height: auto;
+        font-size: 0.28rem;
+        top: 0.96rem;
+        bottom: 1.2rem;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    &.nofooter{
+        bottom:0px;
+    }
+    &.noheader{
+        top:0px;
+    }
+    .pages-swiper{
+        width: 100%;
+        background-color: @panelbgcolor;
+        overflow-y: visible;
+        margin-bottom: 0.24rem;
+        height:3.6rem;
+        height:fit-content;
+    }
+    .pages-box{
+        width: 100%;
+        overflow-y: visible;
+        padding: 0px 0.15rem;
+        &.swiper-slide{
+            overflow-y: scroll;
+        }
+        &.nopadding{
+            padding:0px;
+        }
+        .page-form{
+            padding:0.3rem;
+            font-size: 0.32rem;
+            line-height: 0.64rem;
+            .form-group{
+                clear: both;
+                overflow: hidden;
+                &.border{
+                    border-bottom: 1px solid gainsboro;
+                    overflow: hidden;
+                    &:hover{
+                        border-bottom: 1px solid @activecolor;
+                    }
+                }
+                label{
+                    font-weight: normal;
+                    &.checkbox-inline span,&.radio-inline span{
+                        display: inline-block;
+                        vertical-align: center;
+                        &:before{
+                            width: 0.4rem;
+                            height: 0.4rem;
+                            padding: 0.4rem 0.06rem;
+                            margin-right: 0.16rem;
+                            border-radius: 0.32rem;
+                            border: 1px solid @darkbordercolor;
+                            font-family: 'Glyphicons Halflings';
+                            content:'\e013';
+                            font-size: 0.28rem;
+                            line-height: 0.28rem;
+                            color: @darkbordercolor;
+                        }
+                    }
+                }
+                input{
+                    font-size: 0.28rem;
+                    line-height: 0.6rem;
+                    border: none!important;
+                    box-shadow:none;
+                    background:transparent;
+                    outline: medium;
+                    height: auto;
+                    &:focus,&:hover,&:active{
+                        border: none;
+                        background:transparent;
+                        outline: medium;
+                    }
+                    &[type=checkbox],&[type=radio]{
+                        display: none;
+                        &:checked + span:before{
+                            background-color: @activecolor;
+                            border-color: @activecolor;
+                            color: #FFFFFF;
+                        }
+                    }
+                }
+                .btn{
+                    line-height: 0.72rem;
+                    font-size: 0.32rem;
+                }
+            }
+        }
+        .page-video{
+            width: 100%;
+            height: 5.6rem;
+        }
+        .page-ele{
+            padding: 0.2rem;
+            background-color: @panelbgcolor;
+            margin-bottom: 0.24rem;
+            overflow:hidden;
+            &.radius{
+                border-radius: 0.16rem;
+            }
+            &.clear{
+                padding: 0px;
+                background: none;
+            }
+            &.margin{
+                margin-top: 0.24rem;
+            }
+            &.contin{
+                border-bottom: 1px solid #E4E4E4;
+                margin-bottom: 0px;
+                &:last-child{
+                    margin-bottom: 0.24rem;
+                }
+            }
+            .scorearea{
+                padding-top: 0.3rem;
+                padding-bottom: 0.3rem;
+                clear: both;
+                overflow: hidden;
+                .score{
+                    text-align:center;
+                    display:block;
+                    margin:auto;
+                    width: 2.4rem;
+                    font-size:1.2rem;
+                    line-height:2.4rem;
+                    height:2.4rem;
+                    border-radius: 1.6rem;
+                    font-family: Mistral;
+                    letter-spacing: 0.1rem;
+                    border: 0.04rem solid @activecolor;
+                }
+                .paperinfo{
+                    display: block;
+                    padding-top:0.5rem;
+                    height: 2.4rem;
+                }
+            }
+            .clear{
+                clear:both;
+                overflow: hidden;
+            }
+            &.videos{
+                margin-bottom: 0px;
+                overflow-y: scroll;
+            }
+            .title{
+                font-size: 0.30rem;
+                line-height: 0.54rem;
+                &.range{
+                    height:0.8rem;
+                    line-height: 0.4rem;
+                    padding-left:0.2rem;
+                    padding-right:0.2rem;
+                    overflow:hidden;
+                }
+            }
+            .time{
+                font-size: 0.24rem;
+            }
+            .news{
+                font-size: 0.36rem;
+                line-height: 0.56rem;
+                clear: both;
+                p{
+                    text-indent: 2em;
+                }
+            }
+            .bigtitle{
+                font-weight: bold;
+                font-size: 0.32rem;
+                line-height: 0.72rem;
+                margin: 0px;
+                &:before{
+                    border:0.05rem solid @activecolor;
+                    content:'';
+                    border-radius: 0.05rem;
+                    margin-right: 0.15rem;
+                    font-size: 0.40rem;
+                }
+            }
+            .btn-block{
+                font-size: 0.28rem;
+                line-height: 0.64rem;
+            }
+            .cartbox{
+                display: block;
+                height: auto;
+                font-size: 0.32rem;
+                margin-bottom: 0.20rem;
+                &:last-child{
+                    margin-bottom: 0px;
+                }
+                input{
+                    display: none;
+                }
+                .cart{
+                    width: 100%;
+                    background-color: @panelbgcolor;
+                    border:1px solid gainsboro;
+                    border-radius: 0.1rem!important;
+                    text-align: left;
+                    padding:0rem 0.15rem;
+                    overflow: hidden;
+                    font-weight: normal;
+                    .price{
+                        font-size: 0.48rem;
+                        line-height: 0.96rem;
+                        text-align: right;
+                        padding:0.3rem;
+                    }
+                    p{
+                        color: @iconcolor;
+                        line-height: 0.72rem;
+                    }
+                }
+                input:checked + .cart{
+                    border-color: @activecolor;
+                    position: relative;
+                    &::after{
+                        position: absolute;
+                        right: 0.1rem;
+                        top:0.1rem;
+                        font-family: 'Glyphicons Halflings';
+                        content: "\e013";
+                        color: @activecolor;
+                    }
+                }
+            }
+            .question{
+                font-size: 0.36rem;
+                line-height: 0.72rem;
+                padding:0.15rem;
+                .form-inline{
+                    .form-control{
+                        width:auto;
+                        display: inline-block;
+                    }
+                }
+                .clear{
+                    clear: both;
+                }
+                div{
+                    overflow: hidden;
+                }
+                hr{
+                    margin: 0px;
+                }
+                .tiptext{
+                    font-size: 0.28rem;
+                }
+                .btn-primary{
+                    &.finishbtn{
+                        margin-top: 0.3rem;
+                        padding:0.15rem 0.5rem;
+                        border-radius: 0.35rem;
+                        border: 0px;
+                    }
+                    &.btn-primary:hover{
+                        border-radius: 0.35rem!important;
+                    }
+                }
+                .selectbox{
+                    display: inline-block;
+                    font-weight: normal;
+                    cursor: pointer;
+                    &.float{
+                        float:left;
+                    }
+                    & + p{
+                        margin-left: 1rem;
+                        padding-top: 0.24rem;
+                    }
+                    .selector
+                    {
+                        width: 0.72rem;
+                        height: 0.72rem;
+                        border-radius: 0.72rem;
+                        line-height:0.68rem;
+                        font-size: 0.32rem;
+                        display: inline-block;
+                        text-align: center;
+                        margin-right:0.2rem ;
+                        border:1px solid @iconcolor;
+                        font-weight: normal;
+                        text-align: -webkit-center;
+                        color:@iconcolor;
+                        &.selected{
+                            border-color: @activecolor!important;
+                            background-color: @activecolor!important;
+                            color: @bodyfontcolor!important;
+                        }
+                        &.sign{
+                            background-color: @wrongcolor!important;
+                            color: @bodyfontcolor!important;
+                            border-color: @wrongcolor!important;
+                        }
+                        .glyphicon{
+                            line-height: 0.68rem;
+                        }
+                    }
+                    .selector-addon{
+                        margin-left:-0.15rem;
+                        margin-right: 0.3rem;
+                        font-size: 0.42rem;
+                        font-weight:500;
+                    }
+                    &:last-child{
+                        margin-right:0px;
+                    }
+                    &.radio{
+                        input{
+                            display: none;
+                        }
+                        input:checked + .selector{
+                            border-color:@activecolor;
+                            border-width: 0.04rem;
+                            line-height:0.64rem;
+                            color:@activecolor;
+                            &.right{
+                                background-color: @rightcolor!important;
+                                color: @bodyfontcolor!important;
+                                border-color: @rightcolor!important;
+                            }
+                            &.wrong{
+                                background-color: @wrongcolor!important;
+                                color: @bodyfontcolor!important;
+                                border-color: @wrongcolor!important;
+                            }
+                        }
+                        .selector{
+                            border-radius: 0.72rem;
+                            border:0.04rem solid @darkbordercolor;
+                            box-sizing: border-box;
+                            font-size: 0.40rem!important;
+                        }
+                    }
+                    &.checkbox{
+                        input{
+                            display: none;
+                        }
+                        input:checked + .selector{
+                            border-color:@activecolor;
+                            border-width: 0.04rem;
+                            line-height:0.64rem;
+                            color:@activecolor;
+                            &.right{
+                                background-color: @rightcolor!important;
+                                color: @bodyfontcolor!important;
+                                border-color: @rightcolor!important;
+                            }
+                            &.wrong{
+                                background-color: @wrongcolor!important;
+                                color: @bodyfontcolor!important;
+                                border-color: @wrongcolor!important;
+                            }
+                        }
+                        .selector{
+                            border-radius: 0.16rem;
+                            border:0.04rem solid @darkbordercolor;
+                            box-sizing: border-box;
+                            font-size: 0.40rem!important;
+                        }
+                    }
+                }
+            }
+            .col-xs-6{
+                padding-top: 0.075rem;
+                padding-bottom: 0.075rem;
+                &:nth-child(odd){
+                    padding-left: 0px;
+                    padding-right: 0.075rem;
+                }
+                &:nth-child(even){
+                    padding-right: 0px;
+                    padding-left: 0.075rem;
+                }
+                .cards{
+                    background-color: #FFFFFF;
+                    clear: both;
+                    overflow: hidden;
+                    border-radius: 0.16rem;
+                    padding:0.3rem 0rem;
+                }
+            }
+            ul.orders{
+                padding:0rem 0.2rem;
+                margin-bottom: 0px;
+                li{
+                    line-height: 0.72rem;
+                    list-style-type: none;
+                    border-bottom: 1px solid @bgcolor;
+                    font-size: 0.28rem;
+                    &.title{
+                        font-weight: bold;
+                    }
+                    &.detail{
+                        line-height: 0.60rem;
+                        padding-top: 0.15rem;
+                        padding-bottom: 0.15rem;
+                        font-size: 0.32rem;
+                        .info{
+                            font-size: 0.28rem;
+                            color: #A0A0A0;
+                        }
+                    }
+                    &.tip{
+                        text-align:right;
+                        .price{
+                            font-size: 0.36rem;
+                            color: @activecolor;
+                        }
+                    }
+                    &:last-child{
+                        border-bottom: 0px;
+                    }
+                }
+            }
+            ul.listmenu{
+                padding-left: 0px;
+                li{
+                    font-size:0.32rem;
+                    line-height: 1rem;
+                    border-bottom: 1px solid @bgcolor;
+                    list-style-type: none;
+                    padding-left: 0.40rem;
+                    overflow: hidden;
+                    &.small{
+                        line-height: 0.72rem;
+                        clear: both;
+                        overflow: hidden;
+                        .title{
+                            margin-bottom: 0px;
+                        }
+                        .process{
+                            font-size: 0.28rem;
+                            padding: 0px;
+                            line-height: 0.48rem;
+                        }
+                        .glyphicon{
+                            margin-top: 0.32rem;
+                        }
+                    }
+                    a{
+                        color: @color;
+                        &.btn-primary{
+                            color: @bodyfontcolor;
+                            &.empty{
+                                background: none;
+                                color: @activecolor;
+                            }
+                        }
+                        &.playing{
+                            color: @activecolor;
+                        }
+                    }
+                    .glyphicon{
+                        vertical-align: text-bottom;
+                        margin-right: 0.20rem;
+                        &.pull-right{
+                            padding-top: 0.3rem;
+                        }
+                    }
+                    &:last-child{
+                        border-bottom: 0px;
+                    }
+                }
+            }
+        }
+    }
+}
+.pages-footer{
+    position: fixed;
+    z-index: 9;
+    width:100%;
+    font-size: 0.28rem;
+    padding-top:0.08rem;
+    bottom: 0px;
+    overflow: hidden;
+    color:@color;
+    height: 1.2rem;
+    line-height: 0.48rem;
+    border-top:1px gainsboro solid;
+    background-color: @bgcolor;
+    a{
+        color: @color;
+        glyphicon{
+            color: @iconcolor;
+        }
+    }
+    a.active{
+        color: @activecolor;
+        .glyphicon{
+            color: @activecolor;
+        }
+    }
+    .navibutton{
+        cursor: pointer;
+    }
+    .subpaperbtn{
+        border-radius: 0.44rem;
+        width:96%;
+        height: 0.88rem;
+        line-height: 0.60rem;
+        font-size: 0.32rem;
+    }
+}
+
+/*零散CSS*/

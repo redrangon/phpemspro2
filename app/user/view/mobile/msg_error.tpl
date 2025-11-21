@@ -1,0 +1,33 @@
+{x2;include:plugin_question}
+<table class="table table-hover table-bordered">
+	<tr>
+		<th>
+			错误原因
+		</th>
+	</tr>
+	<tr>
+		<td>
+			{x2;$error['erintro']}
+		</td>
+	</tr>
+	<tr>
+		<th>
+			处理人
+		</th>
+	</tr>
+	<tr>
+		<td>
+			{x2;$error['erteacher']}
+		</td>
+	</tr>
+	<tr>
+		<th>
+			回复信息
+		</th>
+	</tr>
+	<tr>
+		<td>
+			{x2;$error['errback']}
+		</td>
+	</tr>
+</table>

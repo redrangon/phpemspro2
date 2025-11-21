@@ -1,0 +1,351 @@
+{x2;include:header}
+<body>
+{x2;include:top}
+<div class="container-fluid pages-content">
+	<div class="row-fluid nav">
+		<div class="pep nav">
+			<div class="col-xs-3 title">
+				<ul class="list-unstyled list-inline">
+					<li class="nopadding"><img src="public/static/images/index_logo.jpg" /></li>
+				</ul>
+			</div>
+            <div class="col-xs-6">
+				<ul class="list-unstyled list-inline">
+					<li class="title">{x2;$paper['name']} </li>
+				</ul>
+			</div>
+			<div class="col-xs-3">
+				<ul class="list-unstyled list-inline pull-right">
+					<li class="title" style="padding-right: 0px;">
+						<button type="button" class="btn btn-default" onclick="javascript:saveanswer(true)"><i class="glyphicon glyphicon-floppy-disk"></i> 暂存退出</button>
+						<button type="button" onclick="javascript:$('#submodal').modal();" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> 交卷</button>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="row-fluid panels">
+		<div class="pep panels">
+			<div class="col-xs-3" style="padding-left: 0px;">
+				<p class="pagebox">
+					<a class="btn btn-primary btn-block" style="font-size: 20px;padding:15px;font-weight: 600;"><span id="timer_h">00</span>：<span id="timer_m">00</span>：<span id="timer_s">00</span></a>
+				</p>
+				<div class="leftmenu swiper-container" style="background: none;overflow: hidden;" id="questionindex">
+					<div class="swiper-wrapper" style="height: auto;">
+                        {x2;eval:v:qtid = 0}
+						{x2;tree:$paper['setting']['papersetting']['questypelite'],lite,lid}
+                        {x2;eval:v:qtindex = 0}
+                        {x2;eval:v:questype = v:key}
+                        {x2;if:$paper['question']['questions'][v:questype] || $paper['question']['questionrows'][v:questype]}
+						<div class="swiper-slide questionindex">
+                            <p class="text-center title">{x2;$questypes[v:questype]['questype']}</p>
+                            {x2;if:$paper['question']['questions'][v:questype]}
+                            {x2;if:$basic['basicexam']['changesequence']}
+                            {x2;eval: shuffle($paper['question']['questions'][v:questype]);}
+                            {x2;endif}
+                            {x2;tree:$paper['question']['questions'][v:questype],question,qid}
+                            {x2;eval:v:qtid++}
+                            {x2;eval:v:qtindex++}
+							<a id="sign_{x2;v:question['questionid']}" data-index="{x2;v:qtid}" rel="{x2;v:question['questionid']}" href="javascript:;" class="questionindexbutton btn btn-default">{x2;v:qid}</a>
+                            {x2;if:v:qtindex % 40 == 0 && v:qtindex < $paper['setting']['papersetting']['questype'][v:questype]['number']}
+						</div>
+						<div class="swiper-slide questionindex">
+							<p class="text-center title">{x2;$questypes[v:questype]['questype']}</p>
+							{x2;endif}
+                            {x2;endtree}
+                            {x2;endif}
+
+
+							{x2;if:$paper['question']['questionrows'][v:questype]}
+                            {x2;if:$basic['basicexam']['changesequence']}
+                            {x2;eval: shuffle($paper['question']['questionrows'][v:questype]);}
+                            {x2;endif}
+							{x2;tree:$paper['question']['questionrows'][v:questype],questionrows,qrid}
+							{x2;tree:v:questionrows['data'],question,qid}
+							{x2;eval:v:qtid++}
+							{x2;eval:v:qtindex++}
+							<a id="sign_{x2;v:question['questionid']}" data-index="{x2;v:qtid}" rel="{x2;v:question['questionid']}" href="javascript:;" class="questionindexbutton btn btn-default">{x2;v:qid}</a>
+							{x2;if:v:qtindex % 40 == 0 && v:qtindex < $paper['setting']['papersetting']['questype'][v:questype]['number']}
+						</div>
+						<div class="swiper-slide questionindex">
+							<p class="text-center title">{x2;$questypes[v:questype]['questype']}</p>
+							{x2;endif}
+							{x2;endtree}
+							{x2;endtree}
+							{x2;endif}
+						</div>
+                        {x2;endif}
+                        {x2;endtree}
+					</div>
+					<div class="swiper-pagination text-center"></div>
+					{x2;eval: $allnumber = v:qtid}
+				</div>
+			</div>
+			<form class="col-xs-9 nopadding" id="exampaper" action="index.php?exam-app-exampaper-save" method="post">
+				<input type="hidden" name="token" value="{x2;$token}">
+                <input type="hidden" name="sign" value="{x2;$sign}">
+				{x2;eval:v:qtid = 0}
+                {x2;tree:$paper['setting']['papersetting']['questypelite'],lite,lid}
+                {x2;eval:v:qtindex = 0}
+                {x2;eval:v:questype = v:key}
+                {x2;if:$paper['question']['questions'][v:questype] || $paper['question']['questionrows'][v:questype]}
+                {x2;if:$paper['question']['questions'][v:questype]}
+                {x2;tree:$paper['question']['questions'][v:questype],question,qid}
+                {x2;eval:v:qtid++}
+                {x2;eval:v:qtindex++}
+				<div class="panel panel-default pagebox border" style="background: none;" data-questionid="{x2;v:question['questionid']}">
+					<div class="panel-heading blod" style="background: none;">
+						第{x2;v:qtindex}题 【{x2;$questypes[v:question['questiontype']]['questype']}】
+						{x2;if:v:qtid < $allnumber}
+						<a data-toggle="tooltip" data-placement="bottom" title="也可以使用键盘右方向键切换" class="btn btn-default pull-right nextbutton"> 下一题 <i class="glyphicon glyphicon-chevron-right"></i></a>
+                        {x2;endif}
+                        {x2;if:v:qtid >1}
+						<a data-toggle="tooltip" data-placement="bottom" title="也可以使用键盘左方向键切换" class="btn btn-default pull-right prevbutton"><i class="glyphicon glyphicon-chevron-left"></i> 上一题</a>
+                        {x2;endif}
+					</div>
+					<div class="panel-body">
+                        {x2;if:$parent['qrquestion']}
+						<div class="panel-heading">
+                            {x2;realhtml:$parent['qrquestion']}
+						</div>
+                        {x2;endif}
+						<div class="panel-heading">
+                            {x2;realhtml:v:question['question']}
+						</div>
+						<div class="panel-body">
+							{x2;eval:$question = v:question}
+							{x2;include:plugin_examquestion}
+						</div>
+					</div>
+				</div>
+                {x2;endtree}
+                {x2;endif}
+
+                {x2;if:$paper['question']['questionrows'][v:questype]}
+                {x2;tree:$paper['question']['questionrows'][v:questype],questionrows,qrid}
+                {x2;tree:v:questionrows['data'],question,qid}
+                {x2;eval:v:qtid++}
+                {x2;eval:v:qtindex++}
+				<div class="panel panel-default pagebox border" style="background: none;" data-questionid="{x2;v:question['questionid']}">
+					<div class="panel-heading blod" style="background: none;">
+						第{x2;v:qtindex}题 【{x2;$questypes[v:question['questiontype']]['questype']}】
+                        {x2;if:v:qtid < $allnumber}
+						<a data-toggle="tooltip" data-placement="bottom" title="也可以使用键盘右方向键切换" class="btn btn-default pull-right nextbutton"> 下一题 <i class="glyphicon glyphicon-chevron-right"></i></a>
+                        {x2;endif}
+                        {x2;if:v:qtid >1}
+						<a data-toggle="tooltip" data-placement="bottom" title="也可以使用键盘左方向键切换" class="btn btn-default pull-right prevbutton"><i class="glyphicon glyphicon-chevron-left"></i> 上一题</a>
+                        {x2;endif}
+					</div>
+					<div class="panel-body">
+                        <div class="panel-heading">
+                            {x2;realhtml:v:questionrows['qrquestion']}
+						</div>
+                        <div class="panel-heading">
+                            {x2;realhtml:v:question['question']}
+						</div>
+						<div class="panel-body">
+							{x2;eval:$question = v:question}
+							{x2;include:plugin_examquestion}
+						</div>
+					</div>
+				</div>
+                {x2;endtree}
+                {x2;endtree}
+                {x2;endif}
+
+                {x2;endif}
+				{x2;endtree}
+			</form>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="submodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">交卷</h4>
+			</div>
+			<div class="modal-body">
+				<p>共有试题 <span class="allquestionnumber text-info">50</span> 题，已做 <span class="yesdonumber text-warning">0</span> 题。您确认要交卷吗？</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" onclick="javascript:submitPaper();" class="btn btn-primary">确定交卷</button>
+				<button aria-hidden="true" class="btn" type="button" data-dismiss="modal">再检查一下</button>
+			</div>
+		</div>
+	</div>
+</div>
+{x2;include:footer}
+<script>
+    $(function () {
+        var init = true;
+        var index = 0;
+        $('[data-toggle="tooltip"]').tooltip();
+        var mySwiper = new Swiper('.swiper-container', {
+            "pagination":".swiper-pagination",
+            "paginationType" : 'fraction',
+            'preventClicks':false,
+            "loop": false,
+            "autoplay": 0,
+            "observer": true,
+            "observeParents": true,
+            prevButton:'.swiper-button-prev',
+            nextButton:'.swiper-button-next'
+        });
+        $('.selectbox.radio .selector').parent().siblings().on('click',function(){
+            $(this).parent().find('.selector').trigger('click');
+        });
+        $('.selectbox.checkbox .selector').parent().siblings().on('click',function(){
+            $(this).parent().find('.selector').trigger('click');
+        });
+        $('#exampaper').find('.panel').addClass('hide').eq(index).removeClass('hide');
+        $.get('index.php?exam-app-exampaper-lefttime&token={x2;$token}&rand'+Math.random(),function(data){
+            var setting = {
+                time:{x2;$paper['time']},
+                hbox:$("#timer_h"),
+                mbox:$("#timer_m"),
+                sbox:$("#timer_s"),
+                finish:function(){
+                    $('#exampaper').submit();
+                }
+            }
+            setting.lefttime = parseInt(data);
+            countdown(setting);
+        });
+        function nextquestion()
+		{
+			if(index < ($('#exampaper').find('.panel').length - 1))
+			{
+				index++;
+                $('#exampaper').find('.panel').addClass('hide').eq(index).removeClass('hide');
+                var sindex = index + 1;
+                mySwiper.slideTo($('#questionindex .questionindexbutton[data-index='+sindex+']').parents('.swiper-slide').index());
+			}
+		}
+        function prevquestion()
+        {
+            if(index > 0)
+            {
+                index--;
+                $('#exampaper').find('.panel').addClass('hide').eq(index).removeClass('hide');
+                var sindex = index + 1;
+                mySwiper.slideTo($('#questionindex .questionindexbutton[data-index='+sindex+']').parents('.swiper-slide').index());
+            }
+        }
+        $('.prevbutton').on('click',prevquestion);
+    	$('.nextbutton').on('click',nextquestion);
+    	$('.questionindexbutton').on('click',function(){
+            _this = $(this);
+            $('#exampaper').find('.panel').addClass('hide');
+            $('#exampaper').find('.panel[data-questionid='+_this.attr('rel')+']').removeClass('hide');
+            index = parseInt(_this.attr('data-index')-1);
+            if(index < 1)index = 0;
+        });
+        $(document).keyup(function(e){
+            var key =  e.which;
+            if(key == 37){
+                prevquestion();
+            }
+            else if(key == 39){
+                nextquestion();
+            }
+        });
+        setInterval(saveanswer,{x2;$savetime});
+        var mystorage = new storage('{x2;$token}');
+        initData = mystorage.question;
+        {x2;if:$useranswer}
+        if($.isEmptyObject(initData))
+		{
+            initData = $.parseJSON('{x2;$useranswer}');
+			mystorage.synchData(initData);
+		}
+		{x2;endif}
+        if(initData){
+            var textarea = $('#exampaper textarea');
+            $.each(textarea,function(){
+                var _this = $(this);
+                if(initData[_this.attr('name')])
+                {
+                    _this.val(initData[_this.attr('name')].value);
+                    CKEDITOR.instances[_this.attr('id')].setData(initData[_this.attr('name')].value);
+                    if(initData[_this.attr('name')].value && initData[_this.attr('name')].value != '')
+                    {
+                        batmark(_this.parents('.panel:first').attr('data-questionid'),initData[_this.attr('name')].value);
+                    }
+                }
+            });
+            var texts = $('#exampaper :input[type=text]');
+            $.each(texts,function(){
+                var _this = $(this);
+                if(initData[_this.attr('name')])
+                {
+                    _this.val(initData[_this.attr('name')]?initData[_this.attr('name')].value:'');
+                    if(initData[_this.attr('name')].value && initData[_this.attr('name')].value != '')
+                    {
+                        batmark(_this.parents('.panel:first').attr('data-questionid'),initData[_this.attr('name')].value);
+                    }
+                }
+            });
+
+            var radios = $('#exampaper :input[type=radio]');
+            $.each(radios,function(){
+                var _= this, v = initData[_.name]?initData[_.name].value:null;
+                var _this = $(this);
+                if(v!=''&&v==_.value){
+                    _.checked = true;
+                    batmark(_this.parents('.panel:first').attr('data-questionid'),initData[_this.attr('name')].value);
+                }else{
+                    _.checked=false;
+                }
+            });
+
+            var checkboxs=$('#exampaper :input[type=checkbox]');
+            $.each(checkboxs,function(){
+                var _=this,v=initData[_.name]?initData[_.name].value:null;
+                var _this = $(this);
+                if(v!=''&&v==_.value){
+                    _.checked=true;
+                    batmark(_this.parents('.panel:first').attr('data-questionid'),initData[_this.attr('name')].value);
+                }else{
+                    _.checked=false;
+                }
+            });
+        }
+
+        $('#exampaper :input[type=text]').change(function(){
+            var _this = $(this);
+            mystorage.addItem(_this.attr('name'),{value:_this.val(),time:Date.parse(new Date())/1000});
+            markQuestion(_this.parents('.panel:first').attr('data-questionid'),true);
+        });
+
+        $('#exampaper :input[type=radio]').change(function(){
+            var _this=$(this);
+            if(_this.prop("checked")){
+                mystorage.addItem(_this.attr('name'),{value:_this.val(),time:Date.parse(new Date())/1000});
+            }else{
+                mystorage.addItem(_this.attr('name'),{value:null,time:null});
+            }
+            markQuestion(_this.parents('.panel:first').attr('data-questionid'));
+        });
+
+        $('#exampaper textarea').change(function(){
+            var _this=$(this);
+            mystorage.addItem(_this.attr('name'),{value:_this.val(),time:Date.parse(new Date())/1000});
+            markQuestion(_this.parents('.panel:first').attr('data-questionid'),true);
+        });
+        $('#exampaper :input[type=checkbox]').change(function(){
+            var _this = $(this);
+            if(_this.prop("checked")){
+                mystorage.addItem(_this.attr('name'),{value:_this.val(),time:Date.parse(new Date())/1000});
+            }else{
+                mystorage.addItem(_this.attr('name'),{value:null,time:null});
+            }
+            markQuestion(_this.parents('.panel:first').attr('data-questionid'));
+        });
+        $('.allquestionnumber').html($('#exampaper .panel').length);
+        $('.yesdonumber').html($('#questionindex .btn-primary').length);
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+{x2;if:!$_userhash}
+{x2;include:header}
+<body>
+{x2;include:nav}
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="pep">
+			<div class="col-xs-2 leftmenu">
+                {x2;include:menu}
+			</div>
+			<div id="datacontent">
+{x2;endif}
+				<ol class="breadcrumb">
+					<li><a href="index.php?{x2;$_route['app']}-master">{x2;$apps[$_route['app']]['appname']}</a></li>
+					<li><a href="index.php?{x2;$_route['app']}-master-sales">活动管理</a></li>
+					<li class="active">增加活动</li>
+				</ol>
+				<div class="panel panel-default" id="datacontent-container">
+					<div class="panel-heading">
+						增加活动
+						<a href="index.php?{x2;$_route['app']}-master-sales" class="pull-right">活动管理</a>
+					</div>
+					<div class="panel-body">
+						<form action="index.php?{x2;$_route['app']}-master-sales-add" method="post" class="form-horizontal">
+							<fieldset>
+								<div class="form-group">
+									<label for="modulename" class="control-label col-sm-2">活动名称</label>
+									<div class="col-sm-4">
+										<input class="form-control" type="text" id="input1" name="args[saletitle]" value="{x2;$sale['saletitle']}" needle="needle" msg="您必须输入活动名称">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="moduledescribe" class="control-label col-sm-2">活动图片</label>
+									<div class="col-sm-9">
+										<script type="text/template" id="pe-template-photo">
+											<div class="qq-uploader-selector" style="width:30%" qq-drop-area-text="可将图片拖拽至此处上传" style="clear:both;">
+												<div class="qq-upload-button-selector" style="clear:both;">
+													<ul class="qq-upload-list-selector list-unstyled" aria-live="polite" aria-relevant="additions removals" style="clear:both;">
+														<li class="text-center">
+															<div class="thumbnail">
+																<img class="qq-thumbnail-selector" alt="点击上传新图片">
+																<input type="hidden" class="qq-edit-filename-selector" name="args[salethumb]" tabindex="0">
+															</div>
+														</li>
+													</ul>
+													<ul class="qq-upload-list-selector list-unstyled" aria-live="polite" aria-relevant="additions removals" style="clear:both;">
+														<li class="text-center">
+															<div class="thumbnail">
+																<img class="qq-thumbnail-selector" src="public/static/images/noimage.gif" alt="点击上传新图片">
+																<input type="hidden" class="qq-edit-filename-selector" name="args[salethumb]" tabindex="0" value="public/static/images/noimage.gif">
+															</div>
+														</li>
+													</ul>
+												</div>
+											</div>
+										</script>
+										<div class="fineuploader" attr-type="thumb" attr-template="pe-template-photo"></div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="catdes" class="control-label col-sm-2">起止时间</label>
+									<div  class="col-sm-10 form-inline">
+										<input class="form-control datetimepicker" data-minview="0" data-date-format="yyyy-mm-dd hh:ii:ss" name="args[salestime]" type="text" msg="您必须输入一个开启时间起点" /> - <input class="form-control datetimepicker" data-minview="0" data-date-format="yyyy-mm-dd hh:ii:ss" name="args[saleetime]" type="text" msg="您必须输入一个开启时间终点" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="catdes" class="control-label col-sm-2">活动信息</label>
+									<div  class="col-sm-10">
+										<textarea class="form-control" rows="5" name="args[saleinfo]"></textarea>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="catdes" class="control-label col-sm-2"></label>
+									<div class="col-sm-10">
+										<button class="btn btn-primary" type="submit">提交</button>
+										<input type="hidden" name="addsale" value="1"/>
+                                        {x2;tree:$search,arg,aid}
+										<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+                                        {x2;endtree}
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+				{x2;if:!$_userhash}
+				{x2;include:footer}
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
+{x2;endif}
